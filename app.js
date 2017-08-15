@@ -1,28 +1,69 @@
+//BUDGET CONTROLLER
 var budgetController = (function() {
 
-  var x = 23;
-
-  var add = function(a) {
-    return x + a
-  }
-  return {
-    publicTest: function(b) {
-      return add(b);
-    }
-  }
 })()
 
-var userInterface = (function() {
-  //some code
-})()
+//UI CONTROLLER
+var UIController = (function() {
 
-//
-var controller = (function(budgetCtrl, Ui) {
-  var z = budgetCtrl.publicTest(5)
+  var DOMstrings = {
+    inputType: '.add__type',
+    inputDescription: '.add__description',
+    inputValue: '.add__value',
+    inputBtn: '.add__btn'
+  }
 
   return {
-    anotherPublic: function() {
-      console.log(z);
+    getInput: function() {
+      return {
+        type: document.querySelector(DOMstrings.inputType).value, // will be either inc or exp]
+        description: document.querySelector(DOMstrings.inputDescription).value,
+        value: document.querySelector(DOMstrings.inputValue).value,
+      }
+    },
+    getDOMstrings: function() {
+      return DOMstrings;
+    }
+  };
+})()
+
+//GLOBAL APP CONTROLLER
+var controller = (function(budgetCtrl, UICtrl) {
+
+  function setupEventListers() {
+    var DOM = UICtrl.getDOMstrings()
+
+    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem)
+
+    document.addEventListener('keypress', function(event) {
+      if (event.keycode === 13 || event.which === 13) {
+        ctrlAddItem()
+      }
+    })
+  }
+
+  var ctrlAddItem = function() {
+    // 1. Get the field input data
+    var input = UICtrl.getInput()
+
+    console.log(input);
+
+    // 2. Add the item to the budget controller
+
+    // 3. Add the item to the ui
+
+    // 4. Calc budget
+
+    // 5. Display the budget on the UI
+  }
+
+  return {
+    init: function() {
+      console.log('App has started');
+      setupEventListers()
     }
   }
-})(budgetController, userInterface)
+
+})(budgetController, UIController);
+
+controller.init()
