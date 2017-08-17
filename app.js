@@ -1,11 +1,13 @@
 //BUDGET CONTROLLER
 var budgetController = (function() {
+  // Constructor for expenses
   var Expense = function(id, description, value) {
     this.id = id
     this.description = description
     this.value = value
   };
 
+  // Constructor for income
   var Income = function(id, description, value) {
     this.id = id
     this.description = description
@@ -59,6 +61,21 @@ var budgetController = (function() {
       //Returns new element
       return newItem;
     },
+
+    deleteItem: function(type, id) {
+      var ids, index
+
+      ids = data.allItems[type].map(function(current) {
+        return current.id;
+      });
+
+      index = ids.indexOf(id);
+
+      if (index !== -1) {
+        data.allItems[type].splice(index, 1)
+      }
+    },
+
     calculateBudget: function() {
 
       // 1. Calc total income and expenses
@@ -236,12 +253,22 @@ var controller = (function(budgetCtrl, UICtrl) {
   };
 
   var ctrlDeleteItem = function(event) {
-    var itemID, splitID, type, ID
+    var itemID, splitID, type, ID;
+
     itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
     if (itemID) {
+
       splitID = itemID.split('-')
       type = splitID[0];
-      ID = splitID[1];
+      ID = parseInt(splitID[1]);
+
+      // 1. Delete item from data structure
+      budgetCtrl.deleteItem(type, ID);
+
+      // 2. Delete the item from the UI
+
+      // 3. update and show the new budget
     }
   }
 
