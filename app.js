@@ -162,6 +162,7 @@ var UIController = (function() {
     expensesLabel: '.budget__expenses--value',
     percentageLabel: '.budget__expenses--percentage',
     container: '.container',
+    expensesPercLabel: '.item__percentage'
   };
 
   return {
@@ -235,6 +236,17 @@ var UIController = (function() {
       } else {
         document.querySelector(DOMstrings.percentageLabel).textContent = '---'
       }
+    },
+    displayPercentage: function(percentages) {
+
+      var fields = document.querySelectorAll(DOMstrings.expensesPercLabel)
+      var nodeListForEach = function(list, callback) {
+
+      }
+
+      nodeListForEach(fields, function(current, index) {
+        //
+      })
     },
 
     getDOMstrings: function() {
